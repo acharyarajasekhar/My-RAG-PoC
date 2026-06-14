@@ -10,9 +10,10 @@ public sealed class RagRetrieverFactory
     public Task<RagRetriever> CreateAsync()
     {
         var embeddingClient = new OpenAIEmbeddingClient(
-            baseUrl: "https://openrouter.ai/api/v1",
-            apiKey: Environment.GetEnvironmentVariable("OPENROUTER_API_KEY") ?? string.Empty,
-            defaultModel: "openai/text-embedding-3-small");
+            baseUrl: Environment.GetEnvironmentVariable("EMBEDDING_MODEL_BASE_URL") ?? string.Empty,
+            apiKey: Environment.GetEnvironmentVariable("EMBEDDING_MODEL_API_KEY") ?? string.Empty,
+            defaultModel: Environment.GetEnvironmentVariable("EMBEDDING_MODEL") ?? string.Empty
+        );
 
         var retriever = new RagRetriever(
             embeddings: embeddingClient,
