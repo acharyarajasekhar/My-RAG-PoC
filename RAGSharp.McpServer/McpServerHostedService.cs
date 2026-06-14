@@ -65,7 +65,7 @@ public sealed class McpServerHostedService : BackgroundService
                 }
 
                 var response = await _rpcHandler.HandleAsync(request, _retriever);
-                Console.WriteLine(JsonSerializer.Serialize(response));
+                Console.WriteLine(JsonSerializer.Serialize(response?.Result));
             }
             catch (Exception ex)
             {

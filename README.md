@@ -81,7 +81,7 @@ Below are example JSON‑RPC payloads you can POST to the server (default endpoi
 
 ```json
 // 3. Ask a question (RAG‑augmented answer)
-{"jsonrpc":"2.0","id":3,"method":"rag/ask","params":{"query":"What is TOGAF"}}
+{"jsonrpc":"2.0","id":3,"method":"rag/ask","params":{"query":"What is TOGAF. Give me one sentence answer."}}
 ```
 
 These examples demonstrate the required **camel‑case** property names (`jsonrpc`, `id`, `method`, `params`). Using a different case (e.g., `JsonRpc` or `Method`) will cause the server to fall back to the default *"Unknown method"* error.

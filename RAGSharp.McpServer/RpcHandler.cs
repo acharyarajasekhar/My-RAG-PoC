@@ -67,7 +67,8 @@ public sealed class RpcHandler
         return new McpResponse
         {
             Id = request.Id,
-            Result = new { answer, sources = results.Select(r => r.Metadata) }
+            Result = answer,
+            Sources = results.Select(r => r.Metadata)
         };
     }
 
