@@ -15,7 +15,7 @@ public sealed class DocumentLoader
     {
         var loader = new DirectoryLoader();
         var docs = await loader.LoadAsync(DocsPath);
-        await retriever.AddDocumentsAsync(docs, batchSize: 128, maxParallel: 4);
+        await retriever.AddDocumentsAsync(docs, batchSize: 32, maxParallel: 2);
         _logger.LogInformation("Loaded {Count} TOGAF documents from {Path}", docs.Count, DocsPath);
     }
 }
