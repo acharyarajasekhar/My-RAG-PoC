@@ -1,13 +1,19 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
-using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using OpenRouter.NET.Models;
 using RAGSharp.RAG;
 
 public sealed class RpcHandler
 {
+
+    private static readonly JsonSerializerOptions _jsonOptions = new JsonSerializerOptions
+    {
+        PropertyNameCaseInsensitive = true,
+        PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+    };
+
     private readonly OpenRouterService _router;
     private readonly ILogger<RpcHandler> _logger;
 
@@ -33,7 +39,7 @@ public sealed class RpcHandler
         if (request.Params is null)
             return new McpResponse { Id = request.Id, Error = "Missing parameters for search" };
 
-        var args = JsonSerializer.Deserialize<SearchArgs>(request.Params.ToString());
+        var args = JsonSerializer.Deserialize<SearchArgs>(request.Params.ToString(), _jsonOptions);
         if (args is null)
             return new McpResponse { Id = request.Id, Error = "Invalid search arguments" };
 
@@ -50,7 +56,7 @@ public sealed class RpcHandler
         if (request.Params is null)
             return new McpResponse { Id = request.Id, Error = "Missing parameters for ask" };
 
-        var args = JsonSerializer.Deserialize<AskArgs>(request.Params.ToString());
+        var args = JsonSerializer.Deserialize<AskArgs>(request.Params.ToString(), _jsonOptions);
         if (args is null)
             return new McpResponse { Id = request.Id, Error = "Invalid ask arguments" };
 
@@ -70,7 +76,7 @@ public sealed class RpcHandler
         var client = _router.CreateClient();
         var request = new ChatCompletionRequest
         {
-            Model = "meta-llama/llama-3.2-3b-instruct:free",
+            Model = "openai/gpt-oss-120b:free",
             Messages = new List<Message>
             {
                 Message.FromSystem(

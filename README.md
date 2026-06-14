@@ -65,6 +65,29 @@ My-RAG-PoC/
 
 ## Configuration
 
+### Sample JSON‑RPC requests
+
+Below are example JSON‑RPC payloads you can POST to the server (default endpoint **/rpc**). The property names must match the exact casing used by the server:
+
+```json
+// 1. List available tools
+{"jsonrpc":"2.0","id":1,"method":"tools/list","params":{}}
+```
+
+```json
+// 2. Search the knowledge base
+{"jsonrpc":"2.0","id":2,"method":"rag/search","params":{"query":"What is Retrieval‑Augmented Generation?","topK":5}}
+```
+
+```json
+// 3. Ask a question (RAG‑augmented answer)
+{"jsonrpc":"2.0","id":3,"method":"rag/ask","params":{"query":"TOGOF"}}
+```
+
+These examples demonstrate the required **camel‑case** property names (`jsonrpc`, `id`, `method`, `params`). Using a different case (e.g., `JsonRpc` or `Method`) will cause the server to fall back to the default *"Unknown method"* error.
+
+## Configuration
+
 | Variable | Description | Default |
 |----------|-------------|---------|
 | `OPENROUTER_API_KEY` | Your OpenRouter secret key. **Required**. | – |

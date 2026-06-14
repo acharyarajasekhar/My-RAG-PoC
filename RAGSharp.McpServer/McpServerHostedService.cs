@@ -8,6 +8,12 @@ using RAGSharp.RAG;
 
 public sealed class McpServerHostedService : BackgroundService
 {
+    private static readonly JsonSerializerOptions _jsonOptions = new JsonSerializerOptions
+    {
+        PropertyNameCaseInsensitive = true,
+        PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+    };
+
     private readonly ILogger<McpServerHostedService> _logger;
     private readonly OpenRouterService _router;
     private readonly RagRetrieverFactory _retrieverFactory;
@@ -51,7 +57,7 @@ public sealed class McpServerHostedService : BackgroundService
 
             try
             {
-                var request = JsonSerializer.Deserialize<McpRequest>(line);
+                var request = JsonSerializer.Deserialize<McpRequest>(line, _jsonOptions);
                 if (request is null)
                 {
                     await WriteErrorAsync("Invalid request format");
